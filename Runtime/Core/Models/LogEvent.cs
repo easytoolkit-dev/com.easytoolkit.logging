@@ -37,19 +37,41 @@ namespace EasyToolkit.Logging.Core
         public string Message { get; private set; }
 
         /// <summary>
+        /// Gets the optional context data associated with the log event.
+        /// </summary>
+        /// <remarks>
+        /// This property provides additional contextual information that will be serialized
+        /// into the log output. It is null when no context is provided.
+        /// </remarks>
+        public object Context { get; private set; }
+
+        /// <summary>
+        /// Gets the Unity object that originated this log event.
+        /// </summary>
+        /// <remarks>
+        /// This property references the Unity object (such as a MonoBehaviour or ScriptableObject)
+        /// that generated the log event. It is null when no sender is specified.
+        /// </remarks>
+        public UnityEngine.Object Sender { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance with the specified properties.
         /// </summary>
         /// <param name="timestamp">The timestamp when the log event occurred.</param>
         /// <param name="level">The severity level of the log event.</param>
         /// <param name="exception">The optional exception associated with the log event.</param>
         /// <param name="message">The log message.</param>
-        public static LogEvent Create(DateTime timestamp, LogEventLevel level, Exception exception, string message)
+        /// <param name="context">The optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        public static LogEvent Create(DateTime timestamp, LogEventLevel level, Exception exception, string message, object context = null, UnityEngine.Object sender = null)
         {
             var logEvent = PoolUtility.RentObject<LogEvent>();
             logEvent.Timestamp = timestamp;
             logEvent.Level = level;
             logEvent.Exception = exception;
             logEvent.Message = message;
+            logEvent.Context = context;
+            logEvent.Sender = sender;
             return logEvent;
         }
 
@@ -63,6 +85,8 @@ namespace EasyToolkit.Logging.Core
             Level = LogEventLevel.Debug;
             Exception = null;
             Message = null;
+            Context = null;
+            Sender = null;
         }
     }
 }

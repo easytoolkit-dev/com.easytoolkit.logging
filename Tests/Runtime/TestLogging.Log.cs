@@ -144,7 +144,7 @@ namespace EasyToolkit.Logging.Tests
             var message = "Error occurred";
 
             // Act
-            Log.Error(exception, message);
+            Log.Error(message,exception);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -163,7 +163,7 @@ namespace EasyToolkit.Logging.Tests
             var exception = new ArgumentException("Invalid argument");
 
             // Act
-            Log.Error(exception);
+            Log.Error(null, exception);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -181,7 +181,7 @@ namespace EasyToolkit.Logging.Tests
             var message = "Error without exception";
 
             // Act
-            Log.Error(null, message);
+            Log.Error(message);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -223,7 +223,7 @@ namespace EasyToolkit.Logging.Tests
             var message = "Fatal error occurred";
 
             // Act
-            Log.Fatal(exception, message);
+            Log.Fatal(message, exception);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -242,7 +242,7 @@ namespace EasyToolkit.Logging.Tests
             var exception = new OutOfMemoryException("Out of memory");
 
             // Act
-            Log.Fatal(exception);
+            Log.Fatal(null, exception);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -260,7 +260,7 @@ namespace EasyToolkit.Logging.Tests
             var message = "Fatal without exception";
 
             // Act
-            Log.Fatal(null, message);
+            Log.Fatal(message);
 
             // Assert
             Assert.AreEqual(1, _testSink.Count);
@@ -433,6 +433,220 @@ namespace EasyToolkit.Logging.Tests
 
             // Assert
             Assert.AreSame(testLogger, retrieved);
+        }
+
+        #endregion
+
+        #region Context Serialization Tests
+
+        /// <summary>
+        /// Verifies that Debug logs with context object.
+        /// </summary>
+        [Test]
+        public void Debug_WithContext_CapturesContext()
+        {
+            // Arrange
+            var testContext = new { PlayerId = 123, Health = 100 };
+
+            // Act
+            Log.Debug("Player spawned", testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            Assert.IsNotNull(_testSink.LastEvent.Context);
+            Assert.AreSame(testContext, _testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that Info logs with context and serializes to JSON.
+        /// </summary>
+        [Test]
+        public void Info_WithAnonymousContext_SerializesToJson()
+        {
+            // Arrange
+            var testContext = new { Level = 5, Score = 1250.5f };
+
+            // Act
+            Log.Info("Game state", testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(_testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Level", contextJson);
+            StringAssert.Contains("5", contextJson);
+            StringAssert.Contains("Score", contextJson);
+            StringAssert.Contains("1250.5", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that Warn logs with context object.
+        /// </summary>
+        [Test]
+        public void Warn_WithContext_CapturesContext()
+        {
+            // Arrange
+            var testContext = new { WarningCode = "LOW_HEALTH", Threshold = 10 };
+
+            // Act
+            Log.Warn("Health warning", testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            Assert.IsNotNull(_testSink.LastEvent.Context);
+            Assert.AreSame(testContext, _testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that Error logs with context and serializes correctly.
+        /// </summary>
+        [Test]
+        public void Error_WithContext_SerializesToJson()
+        {
+            // Arrange
+            var testContext = new { ErrorCode = 500, Details = "Internal error" };
+
+            // Act
+            Log.Error("Server error", testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(_testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("ErrorCode", contextJson);
+            StringAssert.Contains("500", contextJson);
+            StringAssert.Contains("Details", contextJson);
+            StringAssert.Contains("Internal error", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that Error with exception and context captures both.
+        /// </summary>
+        [Test]
+        public void Error_WithExceptionAndContext_CapturesBoth()
+        {
+            // Arrange
+            var exception = new InvalidOperationException("Test exception");
+            var testContext = new { RetryCount = 3, MaxRetries = 5 };
+
+            // Act
+            Log.Error("Operation failed", exception, testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            Assert.AreSame(exception, _testSink.LastEvent.Exception);
+            Assert.IsNotNull(_testSink.LastEvent.Context);
+            Assert.AreSame(testContext, _testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that Fatal logs with context and serializes correctly.
+        /// </summary>
+        [Test]
+        public void Fatal_WithContext_SerializesToJson()
+        {
+            // Arrange
+            var testContext = new { FatalCode = "CRASH", StackTrace = "Main::Update" };
+
+            // Act
+            Log.Fatal("Application crashed", testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(_testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("FatalCode", contextJson);
+            StringAssert.Contains("CRASH", contextJson);
+            StringAssert.Contains("StackTrace", contextJson);
+            StringAssert.Contains("Main::Update", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that Fatal with exception and context captures both.
+        /// </summary>
+        [Test]
+        public void Fatal_WithExceptionAndContext_CapturesBoth()
+        {
+            // Arrange
+            var exception = new OutOfMemoryException("Out of memory");
+            var testContext = new { MemoryUsage = "95%", Available = "100MB" };
+
+            // Act
+            Log.Fatal("Memory exhausted", exception, testContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            Assert.AreSame(exception, _testSink.LastEvent.Exception);
+            Assert.IsNotNull(_testSink.LastEvent.Context);
+            Assert.AreSame(testContext, _testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that nested anonymous type context serializes correctly.
+        /// </summary>
+        [Test]
+        public void Log_WithNestedContext_SerializesToJson()
+        {
+            // Arrange
+            var nestedContext = new
+            {
+                Player = new
+                {
+                    Id = 123,
+                    Name = "Hero",
+                    Stats = new { Strength = 10, Dexterity = 15 }
+                }
+            };
+
+            // Act
+            Log.Info("Player created", nestedContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(_testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Player", contextJson);
+            StringAssert.Contains("123", contextJson);
+            StringAssert.Contains("Strength", contextJson);
+            StringAssert.Contains("10", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that context with array serializes correctly.
+        /// </summary>
+        [Test]
+        public void Log_WithArrayContext_SerializesToJson()
+        {
+            // Arrange
+            var arrayContext = new
+            {
+                Scores = new[] { 100, 200, 300 },
+                ActivePlayers = new[] { "Alice", "Bob" }
+            };
+
+            // Act
+            Log.Info("Game statistics", arrayContext);
+
+            // Assert
+            Assert.AreEqual(1, _testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(_testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Scores", contextJson);
+            StringAssert.Contains("100", contextJson);
+            StringAssert.Contains("ActivePlayers", contextJson);
+            StringAssert.Contains("Alice", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that null context does not cause error.
+        /// </summary>
+        [Test]
+        public void Log_WithNullContext_DoesNotThrow()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => Log.Info("Message without context", null));
+            Assert.AreEqual(1, _testSink.Count);
+            Assert.IsNull(_testSink.LastEvent.Context);
         }
 
         #endregion

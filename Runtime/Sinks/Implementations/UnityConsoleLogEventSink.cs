@@ -1,5 +1,7 @@
 using System;
+using EasyToolkit.Core.Textual;
 using EasyToolkit.Logging.Core;
+using EasyToolkit.Serialization;
 using UnityEngine;
 
 namespace EasyToolkit.Logging.Sinks.Implementations
@@ -48,13 +50,20 @@ namespace EasyToolkit.Logging.Sinks.Implementations
                     throw new ArgumentOutOfRangeException();
             }
 
+            var message = logEvent.Message;
+            if (logEvent.Context != null)
+            {
+                var contextText = LoggingUtility.ConvertContextToJson(logEvent.Context);
+                message = $"{message} | {contextText}";
+            }
             if (logEvent.Exception != null)
             {
-                _unityLogger.LogException(logEvent.Exception);
+                _unityLogger.Log(type, (object)message, logEvent.Sender);
+                _unityLogger.LogException(logEvent.Exception, logEvent.Sender);
             }
             else
             {
-                _unityLogger.Log(type, logEvent.Message);
+                _unityLogger.Log(type, (object)message, logEvent.Sender);
             }
         }
     }

@@ -38,65 +38,102 @@ namespace EasyToolkit.Logging
         /// Logs a debug-level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Debug(string message)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Debug messages are typically used for detailed information during development
+        /// and troubleshooting. They are usually disabled in production builds.
+        /// </remarks>
+        public static void Debug(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Debug(message);
+            Logger.Debug(message, context, sender);
         }
 
         /// <summary>
         /// Logs an informational message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Info(string message)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Informational messages track the general flow of the application.
+        /// </remarks>
+        public static void Info(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Info(message);
+            Logger.Info(message, context, sender);
         }
 
         /// <summary>
         /// Logs a warning message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Warn(string message)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Warning messages indicate potentially harmful situations or important events
+        /// that do not prevent the application from continuing.
+        /// </remarks>
+        public static void Warn(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Warn(message);
+            Logger.Warn(message, context, sender);
         }
 
         /// <summary>
         /// Logs an error message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Error(string message)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Error messages indicate error events that might still allow the application to continue running.
+        /// </remarks>
+        public static void Error(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Error(message);
+            Logger.Error(message, context, sender);
         }
 
         /// <summary>
         /// Logs an error message with an associated exception.
         /// </summary>
+        /// <param name="message">The message to log.</param>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="message">An optional message providing additional context about the error.</param>
-        public static void Error(Exception exception, string message = null)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Error messages indicate error events that might still allow the application to continue running.
+        /// </remarks>
+        public static void Error(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Error(exception, message);
+            Logger.Error(message, exception, context, sender);
         }
 
         /// <summary>
         /// Logs a fatal error message.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void Fatal(string message)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Fatal messages indicate critical errors that may cause the application to terminate.
+        /// </remarks>
+        public static void Fatal(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Fatal(message);
+            Logger.Fatal(message, context, sender);
         }
 
         /// <summary>
         /// Logs a fatal error message with an associated exception.
         /// </summary>
+        /// <param name="message">The message to log.</param>
         /// <param name="exception">The exception to log.</param>
-        /// <param name="message">An optional message providing additional context about the fatal error.</param>
-        public static void Fatal(Exception exception, string message = null)
+        /// <param name="context">Optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        /// <remarks>
+        /// Fatal messages indicate critical errors that may cause the application to terminate.
+        /// </remarks>
+        public static void Fatal(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
-            Logger.Fatal(exception, message);
+            Logger.Fatal(message, exception, context, sender);
         }
     }
 }

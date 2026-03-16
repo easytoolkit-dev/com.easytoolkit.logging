@@ -55,54 +55,56 @@ namespace EasyToolkit.Logging.Core.Implementations
         /// <param name="level">The log level.</param>
         /// <param name="exception">The optional exception associated with the log event.</param>
         /// <param name="message">The log message.</param>
-        private void Write(LogEventLevel level, [CanBeNull] Exception exception, string message)
+        /// <param name="context">The optional context data to be serialized into the log.</param>
+        /// <param name="sender">The Unity object that originated this log event.</param>
+        private void Write(LogEventLevel level, [CanBeNull] Exception exception, string message, object context = null, UnityEngine.Object sender = null)
         {
             if (!IsEnabled(level))
                 return;
-            var logEvent = LogEvent.Create(DateTime.Now, level, exception, message);
+            var logEvent = LogEvent.Create(DateTime.Now, level, exception, message, context, sender);
             Dispatch(logEvent);
         }
 
         /// <inheritdoc/>
-        public void Debug(string message)
+        public void Debug(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Debug, null, message);
+            Write(LogEventLevel.Debug, null, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Info(string message)
+        public void Info(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Info, null, message);
+            Write(LogEventLevel.Info, null, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Warn(string message)
+        public void Warn(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Warn, null, message);
+            Write(LogEventLevel.Warn, null, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Error(string message)
+        public void Error(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Error, null, message);
+            Write(LogEventLevel.Error, null, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Error(Exception exception, string message = null)
+        public void Error(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Error, exception, message);
+            Write(LogEventLevel.Error, exception, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Fatal(string message)
+        public void Fatal(string message, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Fatal, null, message);
+            Write(LogEventLevel.Fatal, null, message, context, sender);
         }
 
         /// <inheritdoc/>
-        public void Fatal(Exception exception, string message = null)
+        public void Fatal(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
-            Write(LogEventLevel.Fatal, exception, message);
+            Write(LogEventLevel.Fatal, exception, message, context, sender);
         }
     }
 }

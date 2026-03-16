@@ -307,7 +307,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 .CreateLogger();
 
             // Act
-            logger.Error(expectedException, "Error occurred");
+            logger.Error("Error occurred", expectedException);
 
             // Assert
             Assert.AreEqual(1, testSink.Count);
@@ -329,7 +329,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 .CreateLogger();
 
             // Act
-            logger.Error(new InvalidOperationException("Test exception"), expectedMessage);
+            logger.Error(expectedMessage, new InvalidOperationException("Test exception"));
 
             // Assert
             Assert.AreEqual(1, testSink.Count);
@@ -351,7 +351,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 .CreateLogger();
 
             // Act
-            logger.Error(expectedException);
+            logger.Error(null, expectedException);
 
             // Assert
             Assert.AreEqual(1, testSink.Count);
@@ -373,7 +373,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 .CreateLogger();
 
             // Act
-            logger.Fatal(expectedException, "Fatal error occurred");
+            logger.Fatal("Fatal error occurred", expectedException);
 
             // Assert
             Assert.AreEqual(1, testSink.Count);
@@ -396,7 +396,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 .CreateLogger();
 
             // Act
-            logger.Fatal(expectedException);
+            logger.Fatal(null, expectedException);
 
             // Assert
             Assert.AreEqual(1, testSink.Count);
@@ -475,6 +475,236 @@ namespace EasyToolkit.Logging.Core.Tests
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => config.WriteTo.Sink(null));
+        }
+
+        #endregion
+
+        #region Context Serialization Tests
+
+        /// <summary>
+        /// Verifies that context object is captured in log event.
+        /// </summary>
+        [Test]
+        public void Info_WithContext_CapturesContext()
+        {
+            // Arrange
+            var testContext = new { PlayerId = 123, Health = 100 };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("Player spawned", testContext);
+
+            // Assert
+            Assert.AreEqual(1, testSink.Count);
+            Assert.IsNotNull(testSink.LastEvent.Context);
+            Assert.AreSame(testContext, testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that context with anonymous type serializes to valid JSON.
+        /// </summary>
+        [Test]
+        public void Info_WithAnonymousContext_SerializesToJson()
+        {
+            // Arrange
+            var testContext = new { PlayerId = 123, Health = 100, Name = "Hero" };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("Player spawned", testContext);
+
+            // Assert
+            Assert.AreEqual(1, testSink.Count);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+            Assert.IsNotNull(contextJson);
+            Assert.IsNotEmpty(contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that serialized JSON contains expected property values.
+        /// </summary>
+        [Test]
+        public void Context_AnonymousType_ContainsExpectedValues()
+        {
+            // Arrange
+            var testContext = new
+            {
+                Level = 5,
+                Score = 1250.5f,
+                IsAdmin = true
+            };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Debug("Game state", testContext);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+
+            // Assert
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Level", contextJson);
+            StringAssert.Contains("5", contextJson);
+            StringAssert.Contains("Score", contextJson);
+            StringAssert.Contains("1250.5", contextJson);
+            StringAssert.Contains("IsAdmin", contextJson);
+            StringAssert.Contains("true", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that null context does not cause serialization error.
+        /// </summary>
+        [Test]
+        public void Info_WithNullContext_DoesNotThrow()
+        {
+            // Arrange
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act & Assert
+            Assert.DoesNotThrow(() => logger.Info("Message without context", null));
+            Assert.AreEqual(1, testSink.Count);
+            Assert.IsNull(testSink.LastEvent.Context);
+        }
+
+        /// <summary>
+        /// Verifies that context with nested objects serializes correctly.
+        /// </summary>
+        [Test]
+        public void Context_NestedObject_SerializesToJson()
+        {
+            // Arrange
+            var nestedContext = new
+            {
+                Player = new
+                {
+                    Id = 123,
+                    Name = "Hero",
+                    Stats = new { Strength = 10, Dexterity = 15 }
+                },
+                Position = new { X = 10.5f, Y = 20.3f, Z = 5.0f }
+            };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("Player position update", nestedContext);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+
+            // Assert
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Player", contextJson);
+            StringAssert.Contains("123", contextJson);
+            StringAssert.Contains("Strength", contextJson);
+            StringAssert.Contains("10", contextJson);
+            StringAssert.Contains("Position", contextJson);
+            StringAssert.Contains("X", contextJson);
+            StringAssert.Contains("10.5", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that context with array serializes correctly.
+        /// </summary>
+        [Test]
+        public void Context_WithArray_SerializesToJson()
+        {
+            // Arrange
+            var arrayContext = new
+            {
+                Scores = new[] { 100, 200, 300 },
+                Names = new[] { "Alice", "Bob", "Charlie" }
+            };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("High scores", arrayContext);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+
+            // Assert
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Scores", contextJson);
+            StringAssert.Contains("100", contextJson);
+            StringAssert.Contains("200", contextJson);
+            StringAssert.Contains("300", contextJson);
+            StringAssert.Contains("Names", contextJson);
+            StringAssert.Contains("Alice", contextJson);
+            StringAssert.Contains("Bob", contextJson);
+            StringAssert.Contains("Charlie", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that context with DateTime serializes correctly.
+        /// </summary>
+        [Test]
+        public void Context_WithDateTime_SerializesToJson()
+        {
+            // Arrange
+            var testDate = new DateTime(2026, 3, 16, 12, 30, 45);
+            var dateContext = new
+            {
+                Timestamp = testDate,
+                EventName = "GameStart"
+            };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("Event logged", dateContext);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+
+            // Assert
+            Assert.IsNotNull(contextJson);
+            StringAssert.Contains("Timestamp", contextJson);
+            StringAssert.Contains("2026", contextJson);
+            StringAssert.Contains("EventName", contextJson);
+            StringAssert.Contains("GameStart", contextJson);
+        }
+
+        /// <summary>
+        /// Verifies that context with empty anonymous type serializes correctly.
+        /// </summary>
+        [Test]
+        public void Context_EmptyAnonymousType_SerializesToEmptyJson()
+        {
+            // Arrange
+            var emptyContext = new { };
+            var testSink = new LoggingTestHelperTypes.TestLogEventSink();
+            var logger = LoggerFactory.Configure()
+                .MinimumLevel.Debug()
+                .WriteTo.Sink(testSink)
+                .CreateLogger();
+
+            // Act
+            logger.Info("Empty context", emptyContext);
+            var contextJson = LoggingUtility.ConvertContextToJson(testSink.LastEvent.Context);
+
+            // Assert
+            Assert.IsNotNull(contextJson);
+            // Empty object should serialize to "{}" or similar
+            Assert.IsTrue(contextJson.Contains("{") && contextJson.Contains("}"));
         }
 
         #endregion
