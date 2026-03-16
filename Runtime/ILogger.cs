@@ -1,6 +1,6 @@
 using System;
 
-namespace EasyToolkit.Logging.Core
+namespace EasyToolkit.Logging
 {
     /// <summary>
     /// Defines a logger that records log events at various severity levels.

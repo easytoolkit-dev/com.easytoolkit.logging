@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EasyToolkit.Logging.Core
+namespace EasyToolkit.Logging.Configuration
 {
     /// <summary>
     /// Provides extension methods for configuring log sinks.
@@ -24,7 +24,7 @@ namespace EasyToolkit.Logging.Core
         /// </remarks>
         public static ILoggerConfiguration UnityConsole(this ILoggerSinkConfiguration sinkConfiguration)
         {
-            return sinkConfiguration.Sink(new UnityConsoleLogEventSink(Debug.unityLogger));
+            return sinkConfiguration.Sink(new Sinks.Implementations.UnityConsoleLogEventSink(Debug.unityLogger));
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using EasyToolkit.Logging.Core;
 
 namespace EasyToolkit.Logging
 {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EasyToolkit.Logging.Core;
+using EasyToolkit.Logging.Sinks;
 
 namespace EasyToolkit.Logging.Tests
 {
@@ -36,7 +37,7 @@ namespace EasyToolkit.Logging.Tests
             /// </summary>
             public void Emit(LogEvent logEvent)
             {
-                _logEvents.Add(logEvent);
+                _logEvents.Add(LogEvent.Create(logEvent.Timestamp, logEvent.Level, logEvent.Exception, logEvent.Message));
             }
 
             /// <summary>

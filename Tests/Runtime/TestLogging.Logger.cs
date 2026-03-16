@@ -1,4 +1,5 @@
 using System;
+using EasyToolkit.Logging.Configuration;
 using EasyToolkit.Logging.Tests;
 using NUnit.Framework;
 

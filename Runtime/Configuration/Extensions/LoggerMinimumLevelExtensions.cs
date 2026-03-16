@@ -1,4 +1,6 @@
-﻿namespace EasyToolkit.Logging.Core
+﻿using EasyToolkit.Logging.Core;
+
+namespace EasyToolkit.Logging.Configuration
 {
     /// <summary>
     /// Provides extension methods for configuring the minimum log level.
