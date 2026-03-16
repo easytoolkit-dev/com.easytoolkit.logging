@@ -1,0 +1,17 @@
+{
+    "name": "EasyToolkit.Logging",
+    "rootNamespace": "",
+    "references": [
+        "EasyToolkit.Core",
+        "EasyToolkit.Serialization"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

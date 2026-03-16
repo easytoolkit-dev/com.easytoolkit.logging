@@ -1,0 +1,22 @@
+{
+    "name": "EasyToolkit.Logging.Tests",
+    "rootNamespace": "EasyToolkit.Logging.Tests",
+    "references": [
+        "EasyToolkit.Core",
+        "EasyToolkit.Logging",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
