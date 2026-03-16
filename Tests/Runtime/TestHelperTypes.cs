@@ -37,7 +37,7 @@ namespace EasyToolkit.Logging.Tests
             /// </summary>
             public void Emit(LogEvent logEvent)
             {
-                _logEvents.Add(LogEvent.Create(logEvent.Timestamp, logEvent.Level, logEvent.Exception, logEvent.Message));
+                _logEvents.Add(LogEvent.Create(logEvent.Timestamp, logEvent.Level, logEvent.Exception, logEvent.Message, logEvent.Context, logEvent.Sender));
             }
 
             /// <summary>
