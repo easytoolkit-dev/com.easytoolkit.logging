@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EasyToolkit.Logging.Core;
 using UnityEngine;
 
-namespace EasyToolkit.Logging.Core.Implementations
+namespace EasyToolkit.Logging.Sinks.Implementations
 {
     /// <summary>
     /// Aggregates multiple <see cref="ILogEventSink"/> instances and broadcasts log events to all of them.

@@ -1,4 +1,6 @@
-namespace EasyToolkit.Logging.Core
+using EasyToolkit.Logging.Core;
+
+namespace EasyToolkit.Logging.Sinks
 {
     /// <summary>
     /// Defines a sink that receives and processes log events.

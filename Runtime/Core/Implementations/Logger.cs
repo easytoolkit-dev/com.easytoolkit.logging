@@ -1,5 +1,6 @@
 using System;
-using System.Diagnostics;
+using EasyToolkit.Core.Pooling;
+using EasyToolkit.Logging.Sinks;
 using JetBrains.Annotations;
 
 namespace EasyToolkit.Logging.Core.Implementations
@@ -45,6 +46,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         private void Dispatch(LogEvent logEvent)
         {
             _sink.Emit(logEvent);
+            PoolUtility.ReleaseObject(logEvent);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         {
             if (!IsEnabled(level))
                 return;
-            var logEvent = new LogEvent(DateTime.Now, level, exception, message, new StackTrace(true));
+            var logEvent = LogEvent.Create(DateTime.Now, level, exception, message);
             Dispatch(logEvent);
         }
 

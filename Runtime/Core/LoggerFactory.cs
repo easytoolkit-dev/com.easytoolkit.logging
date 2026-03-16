@@ -1,4 +1,6 @@
-﻿namespace EasyToolkit.Logging.Core
+﻿using EasyToolkit.Logging.Configuration;
+
+namespace EasyToolkit.Logging.Core
 {
     /// <summary>
     /// Provides a factory method for creating configured logger instances.
@@ -27,7 +29,7 @@
         /// </remarks>
         public static ILoggerConfiguration Configure()
         {
-            return new Implementations.LoggerConfiguration();
+            return new Configuration.Implementations.LoggerConfiguration();
         }
     }
 }

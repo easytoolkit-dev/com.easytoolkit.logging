@@ -1,6 +1,7 @@
 using System;
+using EasyToolkit.Logging.Core;
 
-namespace EasyToolkit.Logging.Core.Implementations
+namespace EasyToolkit.Logging.Configuration.Implementations
 {
     /// <summary>
     /// Implementation of <see cref="ILoggerMinimumLevelConfiguration"/> for setting the minimum log level.

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using EasyToolkit.Logging.Core;
+using EasyToolkit.Logging.Sinks;
 
-namespace EasyToolkit.Logging.Core.Implementations
+namespace EasyToolkit.Logging.Configuration.Implementations
 {
     /// <summary>
     /// Default implementation of <see cref="ILoggerConfiguration"/> for building configured loggers.
@@ -46,8 +48,8 @@ namespace EasyToolkit.Logging.Core.Implementations
                 throw new InvalidOperationException("CreateLogger() was previously called and can only be called once.");
             _loggerCreated = true;
 
-            var sink = new AggregateLogEventSink(_sinks);
-            return new Logger(_minimumLevel, sink);
+            var sink = new Sinks.Implementations.AggregateLogEventSink(_sinks);
+            return new Core.Implementations.Logger(_minimumLevel, sink);
         }
     }
 }

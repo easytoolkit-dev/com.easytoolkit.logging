@@ -1,4 +1,6 @@
-﻿namespace EasyToolkit.Logging.Core
+﻿using EasyToolkit.Logging.Sinks;
+
+namespace EasyToolkit.Logging.Configuration
 {
     /// <summary>
     /// Provides a fluent interface for configuring log event sinks.

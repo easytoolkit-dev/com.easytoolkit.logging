@@ -1,4 +1,4 @@
-﻿namespace EasyToolkit.Logging.Core
+﻿namespace EasyToolkit.Logging.Configuration
 {
     /// <summary>
     /// Provides a fluent interface for configuring logger settings.

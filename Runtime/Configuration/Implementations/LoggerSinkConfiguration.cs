@@ -1,6 +1,7 @@
 using System;
+using EasyToolkit.Logging.Sinks;
 
-namespace EasyToolkit.Logging.Core.Implementations
+namespace EasyToolkit.Logging.Configuration.Implementations
 {
     /// <summary>
     /// Implementation of <see cref="ILoggerSinkConfiguration"/> for adding log event sinks.
