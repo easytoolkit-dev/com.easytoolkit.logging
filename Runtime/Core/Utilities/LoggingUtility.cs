@@ -1,4 +1,5 @@
 ﻿using EasyToolkit.Serialization;
+using EasyToolkit.Serialization.Formatters;
 
 namespace EasyToolkit.Logging.Core
 {
@@ -6,12 +7,21 @@ namespace EasyToolkit.Logging.Core
     {
         private static readonly SerializationContext SerializationContext = new()
         {
-            MemberFlags = SerializableMemberFlags.AllPublic
+            MemberFlags = SerializableMemberFlags.AllPublic,
+            AllowAnonymousTypes = true
+        };
+
+        private static readonly SerializationSettings SerializationSettings = new()
+        {
+            JsonFormatterSettings = new JsonFormatterSettings()
+            {
+                Options = JsonFormatterOptions.None
+            }
         };
 
         public static string ConvertContextToJson(object context)
         {
-            return EasySerializer.SerializeToJson(context, context: SerializationContext);
+            return EasySerializer.SerializeToJson(context, SerializationSettings, SerializationContext);
         }
     }
 }

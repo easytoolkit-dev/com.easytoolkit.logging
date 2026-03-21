@@ -35,6 +35,30 @@ namespace EasyToolkit.Logging
         public static ILogger Logger { get; set; }
 
         /// <summary>
+        /// Creates a module-scoped logger that prefixes all log messages with the specified module name.
+        /// </summary>
+        /// <param name="moduleName">The module name to prefix to all log messages.</param>
+        /// <param name="sender">The default Unity object that originates log events for this module.</param>
+        /// <returns>A module-scoped <see cref="ILogger"/> that prepends the module name to all messages.</returns>
+        /// <remarks>
+        /// Module loggers are useful for organizing logs from different subsystems or components.
+        /// Each log message will be automatically prefixed with "[ModuleName]" for easy identification.
+        /// The provided sender is used as the default context when no explicit sender is specified.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// // Create a module logger for a network subsystem
+        /// var networkLog = Log.Module("Network", this);
+        /// networkLog.Info("Connected to server");  // Output: "[Network] Connected to server"
+        /// networkLog.Error("Connection lost");     // Output: "[Network] Connection lost"
+        /// </code>
+        /// </example>
+        public static ILogger Module(string moduleName, UnityEngine.Object sender = null)
+        {
+            return new Core.Implementations.ModuleLogger(Logger, moduleName, sender);
+        }
+
+        /// <summary>
         /// Logs a debug-level message.
         /// </summary>
         /// <param name="message">The message to log.</param>
@@ -102,7 +126,8 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Error messages indicate error events that might still allow the application to continue running.
         /// </remarks>
-        public static void Error(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
+        public static void Error(string message, Exception exception, object context = null,
+            UnityEngine.Object sender = null)
         {
             Logger.Error(message, exception, context, sender);
         }
@@ -131,7 +156,8 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Fatal messages indicate critical errors that may cause the application to terminate.
         /// </remarks>
-        public static void Fatal(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
+        public static void Fatal(string message, Exception exception, object context = null,
+            UnityEngine.Object sender = null)
         {
             Logger.Fatal(message, exception, context, sender);
         }

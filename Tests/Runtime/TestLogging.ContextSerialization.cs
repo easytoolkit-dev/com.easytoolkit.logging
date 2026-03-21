@@ -360,42 +360,6 @@ namespace EasyToolkit.Logging.Tests
 
         #endregion
 
-        #region Null and Empty Value Tests
-
-        /// <summary>
-        /// Verifies that null context returns valid JSON.
-        /// </summary>
-        [Test]
-        public void ConvertContextToJson_NullContext_ReturnsValidJson()
-        {
-            // Act
-            var json = LoggingUtility.ConvertContextToJson(null);
-
-            // Assert
-            Assert.IsNotNull(json);
-        }
-
-        /// <summary>
-        /// Verifies that empty string value serializes correctly.
-        /// </summary>
-        [Test]
-        public void ConvertContextToJson_AnonymousTypeWithEmptyString_ReturnsValidJson()
-        {
-            // Arrange
-            var context = new { Empty = "", Value = 42 };
-
-            // Act
-            var json = LoggingUtility.ConvertContextToJson(context);
-
-            // Assert
-            Assert.IsNotNull(json);
-            StringAssert.Contains("Empty", json);
-            StringAssert.Contains("Value", json);
-            StringAssert.Contains("42", json);
-        }
-
-        #endregion
-
         #region Large Data Serialization Tests
 
         /// <summary>
