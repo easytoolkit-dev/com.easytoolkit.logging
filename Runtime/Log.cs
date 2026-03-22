@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace EasyToolkit.Logging
 {
@@ -68,6 +69,7 @@ namespace EasyToolkit.Logging
         /// Debug messages are typically used for detailed information during development
         /// and troubleshooting. They are usually disabled in production builds.
         /// </remarks>
+        [HideInCallstack]
         public static void Debug(string message, object context = null, UnityEngine.Object sender = null)
         {
             Logger.Debug(message, context, sender);
@@ -82,6 +84,7 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Informational messages track the general flow of the application.
         /// </remarks>
+        [HideInCallstack]
         public static void Info(string message, object context = null, UnityEngine.Object sender = null)
         {
             Logger.Info(message, context, sender);
@@ -97,6 +100,7 @@ namespace EasyToolkit.Logging
         /// Warning messages indicate potentially harmful situations or important events
         /// that do not prevent the application from continuing.
         /// </remarks>
+        [HideInCallstack]
         public static void Warn(string message, object context = null, UnityEngine.Object sender = null)
         {
             Logger.Warn(message, context, sender);
@@ -111,6 +115,7 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Error messages indicate error events that might still allow the application to continue running.
         /// </remarks>
+        [HideInCallstack]
         public static void Error(string message, object context = null, UnityEngine.Object sender = null)
         {
             Logger.Error(message, context, sender);
@@ -126,6 +131,7 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Error messages indicate error events that might still allow the application to continue running.
         /// </remarks>
+        [HideInCallstack]
         public static void Error(string message, Exception exception, object context = null,
             UnityEngine.Object sender = null)
         {
@@ -141,6 +147,7 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Fatal messages indicate critical errors that may cause the application to terminate.
         /// </remarks>
+        [HideInCallstack]
         public static void Fatal(string message, object context = null, UnityEngine.Object sender = null)
         {
             Logger.Fatal(message, context, sender);
@@ -156,6 +163,7 @@ namespace EasyToolkit.Logging
         /// <remarks>
         /// Fatal messages indicate critical errors that may cause the application to terminate.
         /// </remarks>
+        [HideInCallstack]
         public static void Fatal(string message, Exception exception, object context = null,
             UnityEngine.Object sender = null)
         {

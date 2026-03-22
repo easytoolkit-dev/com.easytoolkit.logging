@@ -2,6 +2,7 @@ using System;
 using EasyToolkit.Core.Pooling;
 using EasyToolkit.Logging.Sinks;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace EasyToolkit.Logging.Core.Implementations
 {
@@ -43,6 +44,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         /// Dispatches the log event to the configured sink.
         /// </summary>
         /// <param name="logEvent">The log event to dispatch.</param>
+        [HideInCallstack]
         private void Dispatch(LogEvent logEvent)
         {
             _sink.Emit(logEvent);
@@ -57,6 +59,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         /// <param name="message">The log message.</param>
         /// <param name="context">The optional context data to be serialized into the log.</param>
         /// <param name="sender">The Unity object that originated this log event.</param>
+        [HideInCallstack]
         private void Write(LogEventLevel level, [CanBeNull] Exception exception, string message, object context = null, UnityEngine.Object sender = null)
         {
             if (!IsEnabled(level))
@@ -66,42 +69,49 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Debug(string message, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Debug, null, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Info(string message, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Info, null, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Warn(string message, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Warn, null, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Error(string message, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Error, null, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Error(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Error, exception, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Fatal(string message, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Fatal, null, message, context, sender);
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Fatal(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
             Write(LogEventLevel.Fatal, exception, message, context, sender);
