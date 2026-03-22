@@ -1,7 +1,5 @@
 using System;
-using EasyToolkit.Core.Textual;
 using EasyToolkit.Logging.Core;
-using EasyToolkit.Serialization;
 using UnityEngine;
 
 namespace EasyToolkit.Logging.Sinks.Implementations
@@ -30,6 +28,7 @@ namespace EasyToolkit.Logging.Sinks.Implementations
         /// Emits the log event to the Unity console.
         /// </summary>
         /// <param name="logEvent">The log event to emit.</param>
+        [HideInCallstack]
         public void Emit(LogEvent logEvent)
         {
             LogType type;

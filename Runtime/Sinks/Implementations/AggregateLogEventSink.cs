@@ -36,6 +36,7 @@ namespace EasyToolkit.Logging.Sinks.Implementations
         /// If any sink throws an exception during emission, the exception is caught and logged to Unity console.
         /// Processing continues with remaining sinks to ensure fault isolation.
         /// </remarks>
+        [HideInCallstack]
         public void Emit(LogEvent logEvent)
         {
             foreach (var sink in _sinks)
