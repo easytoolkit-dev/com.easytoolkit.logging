@@ -1,5 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace EasyToolkit.Logging.Core.Implementations
 {
@@ -11,7 +12,7 @@ namespace EasyToolkit.Logging.Core.Implementations
     /// to all log messages, making it easier to identify which module generated each log entry.
     /// It also maintains a default Unity sender that can be used when no explicit sender is provided.
     /// </remarks>
-    public sealed class ModuleLogger : ILogger
+    internal sealed class ModuleLogger : ILogger
     {
         private readonly ILogger _logger;
         private readonly string _moduleName;
@@ -31,6 +32,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Debug(string message, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -38,6 +40,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Info(string message, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -45,6 +48,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Warn(string message, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -52,6 +56,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Error(string message, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -59,6 +64,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Error(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -66,6 +72,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Fatal(string message, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
@@ -73,6 +80,7 @@ namespace EasyToolkit.Logging.Core.Implementations
         }
 
         /// <inheritdoc/>
+        [HideInCallstack]
         public void Fatal(string message, Exception exception, object context = null, UnityEngine.Object sender = null)
         {
             sender ??= _sender;
