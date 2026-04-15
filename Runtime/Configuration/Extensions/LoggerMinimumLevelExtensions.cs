@@ -1,4 +1,4 @@
-﻿using EasyToolkit.Logging.Core;
+using EasyToolkit.Logging.Core;
 
 namespace EasyToolkit.Logging.Configuration
 {

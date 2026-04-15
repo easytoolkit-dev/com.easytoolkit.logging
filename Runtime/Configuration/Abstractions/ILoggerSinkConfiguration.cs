@@ -1,4 +1,4 @@
-﻿using EasyToolkit.Logging.Sinks;
+using EasyToolkit.Logging.Sinks;
 
 namespace EasyToolkit.Logging.Configuration
 {

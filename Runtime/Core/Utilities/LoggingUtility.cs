@@ -1,4 +1,4 @@
-﻿using EasyToolkit.Serialization;
+using EasyToolkit.Serialization;
 using EasyToolkit.Serialization.Formatters;
 
 namespace EasyToolkit.Logging.Core
