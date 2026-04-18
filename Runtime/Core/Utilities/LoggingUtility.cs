@@ -8,7 +8,8 @@ namespace EasyToolkit.Logging.Core
         private static readonly SerializationContext SerializationContext = new()
         {
             MemberFlags = SerializableMemberFlags.AllPublic,
-            AllowAnonymousTypes = true
+            AllowAnonymousTypes = true,
+            AllowNonSerializableTypes = true
         };
 
         private static readonly SerializationSettings SerializationSettings = new()
