@@ -14,7 +14,7 @@ namespace EasyToolkit.Logging
     /// <example>
     /// <code>
     /// // Initialize during application startup
-    /// Log.Logger = LoggerFactory.Configure()
+    /// Log.Logger = new LoggerConfiguration()
     ///     .MinimumLevel.Info()
     ///     .WriteTo.UnityConsole()
     ///     .CreateLogger();

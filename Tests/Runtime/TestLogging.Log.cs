@@ -30,7 +30,7 @@ namespace EasyToolkit.Logging.Tests
         {
             _originalLogger = Log.Logger;
             _testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            Log.Logger = LoggerFactory.Configure()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(_testSink)
                 .CreateLogger();
@@ -350,7 +350,7 @@ namespace EasyToolkit.Logging.Tests
         {
             // Arrange
             _testSink.Clear();
-            Log.Logger = LoggerFactory.Configure()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(_testSink)
                 .CreateLogger();
@@ -370,7 +370,7 @@ namespace EasyToolkit.Logging.Tests
         {
             // Arrange
             _testSink.Clear();
-            Log.Logger = LoggerFactory.Configure()
+            Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(_testSink)
                 .CreateLogger();
@@ -422,7 +422,7 @@ namespace EasyToolkit.Logging.Tests
         public void Logger_PropertyCanBeSetAndRetrieved()
         {
             // Arrange
-            var testLogger = LoggerFactory.Configure()
+            var testLogger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(new LoggingTestHelperTypes.TestLogEventSink())
                 .CreateLogger();

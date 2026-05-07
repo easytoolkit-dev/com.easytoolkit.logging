@@ -12,7 +12,7 @@ namespace EasyToolkit.Logging.Configuration
         /// </summary>
         /// <param name="minimumLevelConfiguration">The minimum level configuration.</param>
         /// <returns>The logger configuration for chaining.</returns>
-        public static ILoggerConfiguration Debug(this ILoggerMinimumLevelConfiguration minimumLevelConfiguration)
+        public static LoggerConfiguration Debug(this LoggerMinimumLevelConfiguration minimumLevelConfiguration)
         {
             return minimumLevelConfiguration.Is(LogEventLevel.Debug);
         }
@@ -22,7 +22,7 @@ namespace EasyToolkit.Logging.Configuration
         /// </summary>
         /// <param name="minimumLevelConfiguration">The minimum level configuration.</param>
         /// <returns>The logger configuration for chaining.</returns>
-        public static ILoggerConfiguration Info(this ILoggerMinimumLevelConfiguration minimumLevelConfiguration)
+        public static LoggerConfiguration Info(this LoggerMinimumLevelConfiguration minimumLevelConfiguration)
         {
             return minimumLevelConfiguration.Is(LogEventLevel.Info);
         }
@@ -32,7 +32,7 @@ namespace EasyToolkit.Logging.Configuration
         /// </summary>
         /// <param name="minimumLevelConfiguration">The minimum level configuration.</param>
         /// <returns>The logger configuration for chaining.</returns>
-        public static ILoggerConfiguration Warn(this ILoggerMinimumLevelConfiguration minimumLevelConfiguration)
+        public static LoggerConfiguration Warn(this LoggerMinimumLevelConfiguration minimumLevelConfiguration)
         {
             return minimumLevelConfiguration.Is(LogEventLevel.Warn);
         }
@@ -42,7 +42,7 @@ namespace EasyToolkit.Logging.Configuration
         /// </summary>
         /// <param name="minimumLevelConfiguration">The minimum level configuration.</param>
         /// <returns>The logger configuration for chaining.</returns>
-        public static ILoggerConfiguration Error(this ILoggerMinimumLevelConfiguration minimumLevelConfiguration)
+        public static LoggerConfiguration Error(this LoggerMinimumLevelConfiguration minimumLevelConfiguration)
         {
             return minimumLevelConfiguration.Is(LogEventLevel.Error);
         }
@@ -52,7 +52,7 @@ namespace EasyToolkit.Logging.Configuration
         /// </summary>
         /// <param name="minimumLevelConfiguration">The minimum level configuration.</param>
         /// <returns>The logger configuration for chaining.</returns>
-        public static ILoggerConfiguration Fatal(this ILoggerMinimumLevelConfiguration minimumLevelConfiguration)
+        public static LoggerConfiguration Fatal(this LoggerMinimumLevelConfiguration minimumLevelConfiguration)
         {
             return minimumLevelConfiguration.Is(LogEventLevel.Fatal);
         }

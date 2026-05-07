@@ -20,7 +20,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -40,7 +40,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -61,7 +61,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -82,7 +82,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -103,7 +103,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Info()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -128,7 +128,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -161,7 +161,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Warn()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -181,7 +181,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Warn()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -201,7 +201,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Warn()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -230,7 +230,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedMessage = "Test log message";
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -251,7 +251,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -273,7 +273,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var beforeLog = DateTime.Now;
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -301,7 +301,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedException = new InvalidOperationException("Test exception");
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -323,7 +323,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedMessage = "Additional error context";
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -345,7 +345,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedException = new ArgumentException("Invalid argument");
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -367,7 +367,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedException = new NotImplementedException("Not implemented");
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -390,7 +390,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var expectedException = new OutOfMemoryException("Out of memory");
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -416,7 +416,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -441,7 +441,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Warn()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -471,7 +471,7 @@ namespace EasyToolkit.Logging.Core.Tests
         public void WriteTo_NullSink_ThrowsArgumentNullException()
         {
             // Arrange
-            var config = LoggerFactory.Configure();
+            var config = new LoggerConfiguration();
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => config.WriteTo.Sink(null));
@@ -490,7 +490,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var testContext = new { PlayerId = 123, Health = 100 };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -513,7 +513,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var testContext = new { PlayerId = 123, Health = 100, Name = "Hero" };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -542,7 +542,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 IsAdmin = true
             };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -569,7 +569,7 @@ namespace EasyToolkit.Logging.Core.Tests
         {
             // Arrange
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -598,7 +598,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 Position = new { X = 10.5f, Y = 20.3f, Z = 5.0f }
             };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -631,7 +631,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 Names = new[] { "Alice", "Bob", "Charlie" }
             };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -666,7 +666,7 @@ namespace EasyToolkit.Logging.Core.Tests
                 EventName = "GameStart"
             };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();
@@ -692,7 +692,7 @@ namespace EasyToolkit.Logging.Core.Tests
             // Arrange
             var emptyContext = new { };
             var testSink = new LoggingTestHelperTypes.TestLogEventSink();
-            var logger = LoggerFactory.Configure()
+            var logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Sink(testSink)
                 .CreateLogger();

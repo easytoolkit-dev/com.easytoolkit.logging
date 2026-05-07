@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EasyToolkit.Logging.Configuration;
 using EasyToolkit.Logging.Core;
 using UnityEngine;
 

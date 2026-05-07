@@ -7,7 +7,7 @@ namespace EasyToolkit.Logging.Configuration
     /// </summary>
     /// <remarks>
     /// Extension methods in this class provide convenient syntax for adding specific
-    /// sink types to the logger configuration through the <see cref="ILoggerSinkConfiguration"/>
+    /// sink types to the logger configuration through the <see cref="LoggerSinkConfiguration"/>
     /// fluent interface.
     /// </remarks>
     public static class LoggerSinkExtension
@@ -22,7 +22,7 @@ namespace EasyToolkit.Logging.Configuration
         /// to the Unity console. Log levels are mapped to Unity's <see cref="LogType"/>:
         /// Debug and Info → Log, Warn → Warning, Error and Fatal → Error.
         /// </remarks>
-        public static ILoggerConfiguration UnityConsole(this ILoggerSinkConfiguration sinkConfiguration)
+        public static LoggerConfiguration UnityConsole(this LoggerSinkConfiguration sinkConfiguration)
         {
             return sinkConfiguration.Sink(new Sinks.Implementations.UnityConsoleLogEventSink(Debug.unityLogger));
         }
